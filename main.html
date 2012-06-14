@@ -1,0 +1,205 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/jquery.transit.min.js"></script>
+  <script type="text/javascript" src="js/main.js"></script> 
+  
+  <link href='css/main.css' rel='stylesheet' type='text/css'>
+  
+  <link href='http://fonts.googleapis.com/css?family=Cutive' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Unkempt' rel='stylesheet' type='text/css'>
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+      for(i in CONFIG.ingredients) {
+        $('<div class="ingredient" name="'+ CONFIG.ingredients[i] +'" ><div class="name">'+ CONFIG.ingredients[i] +'</div></div>')
+          .css('background-image', 'url("images/ingredients/'+ CONFIG.ingredients[i] +'.png")')
+          .appendTo('#ingredients');
+                    
+        $('<div class="ingredient-left '+ CONFIG.ingredients[i] +'">')
+          .css('z-index', '1'+ i)
+          .css('background-image', 'url("images/toppings/'+ CONFIG.ingredients[i] +'.png")')
+          .appendTo('#pizza-left');
+          
+        $('<div class="ingredient-right '+ CONFIG.ingredients[i] +'">')
+          .css('z-index', '1'+ i)
+          .css('background-image', 'url("images/toppings/'+ CONFIG.ingredients[i] +'.png")')
+          .appendTo('#pizza-right');
+      }
+      
+      $('#loading-board').fadeOut('fast'); // hide loading-board
+      
+      $('#welcome-board').on('click', function(e) {
+        $(this).fadeOut('fast');
+        //startGame(true);
+      });
+      
+      /*$('.wrapper').on('click', function(e) {
+        $(this).parent('.board').hide();
+        e.preventDefault();
+      });*/
+      
+      $('.ingredient').on('click', function(e) {
+        //alert($(this).attr('name'));
+        addIngredient($(this).attr('name'), ['left', 'right'][Math.floor((Math.random()*2))]);
+        e.preventDefault();
+      });
+      
+      $('.play-btn').on('click', function(e) {
+        resumeGame();
+        $('#pause-board').fadeOut('fast');
+        e.preventDefault();
+      });
+      
+      $('.how-btn').on('click', function(e) {
+        pauseGame();
+        $('#how-board').fadeIn('fast');
+        e.preventDefault();
+      });
+      
+      $('.pause-btn').on('click', function(e) {
+        pauseGame();
+        $('#pause-board').fadeIn('fast');
+        e.preventDefault();
+      });
+      
+      $('.playagain-btn').on('click', function(e) {
+        $('#gameover-board').fadeOut('fast');
+        startGame(true);
+        e.preventDefault();
+      });
+      
+      $('.off-btn').on('click', function(e) {
+        $('#how-board').fadeOut('fast');
+        resumeGame();
+        e.preventDefault();
+      });
+      
+      /*$('.wrapper .content a.button').on('click', function(e) {
+        $(this).parent('.board').hide();
+      });*/
+      
+      startGame(false);
+    });
+  
+  </script>
+</head>
+
+<body>
+<!-- viewarea -->  
+<div id="viewarea">
+  <div id="loading-board" class="board">
+    <div style="margin-top: 20%;">Loading...</div>
+  </div>
+  <div id="welcome-board" class="board">
+    <div id="welcome-bar"></div>
+    <div class="logo"><img src="images/logo.png" /></div>
+    <div class="logo-text">PizzaVille</div>
+    <div class="buttons">
+      <a href="#" id="play-btn" >Play Now</a>
+    </div>
+  </div>
+  
+  <div id="score-board" class="board">
+    <div class="wrapper">
+      <div class="inner">
+        <div class="content">
+          Score
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="pause-board" class="board">
+    <div class="wrapper">
+      <div class="inner">
+        <div class="content">
+          Pause...
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="how-board" class="board">
+    <div class="wrapper">
+      <div class="inner">
+        <h2>How to play...</h2>
+        <div class="content">
+          <p>Tap 1 time on the right ingredient to fill half of the pizza</p>
+          <p>Tap 2 times on the right ingredient to fill whole of the pizza</p>
+          <a class="off-btn button">Back</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="gameover-board" class="board">
+    <div class="wrapper">
+      <div class="inner">
+        <h2>Game Over!</h2>
+        <div class="content">
+          <a class="playagain-btn button">Play again</a>
+          <!--<a class="home-btn button">Home</a>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- game-board -->
+  <div id="game-board" class="board">
+    <div id="game-bar">
+      <div class="container" style="float: left;">
+        Level: <span id="level"></span>
+        <br />
+        <div class="timer-bar" id="time-left">
+          <div class="bar">&nbsp;</div>
+        </div>
+      </div>
+      <div class="container" style="float: left;">
+        Score: <span id="score">0</span>
+      </div>
+      <div class="container" style="float: right;">
+        <a href="#" class="how-btn">?</a>
+      </div>
+    </div>
+    
+    <div id="game-area">
+      <div class="timer-bar" id="next-order">
+        <div class="bar">&nbsp;</div>
+      </div>
+      <div id="order-notes-show"></div>
+      <div id="order-notes"></div>
+      <div id="order-note"></div>
+      <div id="pizza-wrapper">
+        <div id="pizza">
+          <div id="pizza-left"></div>
+          <div id="pizza-right"></div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div id="ingredients-wrapper">
+        <div id="ingredients"></div>
+      </div>
+    </div>
+    <div id="msg">Fail</div>
+  </div> <!-- game-board -->
+    
+</div> <!-- viewarea -->
+<!-- debug -->
+<div id="debug">
+  <a href="#" id="play-btn">Play</a>&nbsp;|&nbsp;<a href="#" id="pause-btn">Pause</a>&nbsp;|&nbsp;<a href="#" id="how-btn">How</a>
+  
+  <br />
+  Errors: <span id="errors">0</span>,&nbsp;
+  <br />
+  Orders queue: <span id="orders"></span>,&nbsp;
+  Orders left: <span id="o"></span> &nbsp;
+  
+  <img src="images/logo.png" height="0" />
+  <img src="images/blueprint.gif" height="0" />
+  <img src="images/wood.jpg" height="0" />
+  <img src="images/base.png" height="0" />
+  <img src="images/board-inner.png" height="0" />
+</div><!-- debug -->
+
+</body>
+</html>

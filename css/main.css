@@ -1,0 +1,460 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #ddd;
+  margin: 0;
+  padding: 0;
+}
+
+#viewarea {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: #f8f8f8;
+  border: 1px solid #000;
+  overflow: none;
+}
+
+.board {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  
+  display: none;
+}
+
+#game-board {
+  z-index: 0;
+  display: block;
+  background: url('../images/wood.jpg') #ddd repeat;
+}
+
+#game-bar, #welcome-bar {
+  height: 70px;
+  width: 100%;
+  background-color: #eee;
+  background: url('../images/blueprint.gif') #fff repeat-x;
+  font-family: 'Cutive', serif;
+  font-size: 20px;
+  box-shadow: 0 5px 5px #888;
+}
+#game-bar .container {
+  padding: 10px 20px;
+  text-shadow: 1px 2px 2px #fff;
+}
+#game-bar .container a {
+  display: inline-block;
+  padding: 4px;
+  background: #fff;
+  border-radius: 8px;
+  color: #36f;
+  text-decoration: none;
+}
+#game-area {
+  height: auto;
+}
+
+#pizza-wrapper {
+  position: absolute;
+  width: 100%;
+  bottom: 26%;
+}
+#pizza {
+  position: relative;
+  margin: 0 auto;
+  width: 180px;
+  height: 180px;
+  clear: both;
+}
+
+#pizza-left, #pizza-right {
+  position: absolute;
+  width: 90px;
+  height: 180px;
+  
+  background-image: url('../images/base.png');
+  background-size: 180px 180px;
+  background-repeat: no-repeat;
+  background-color: #f4f4f4;
+  
+  /*-moz-box-shadow:    4px 6px 4px rgba(68,68,68,0.6);
+  -webkit-box-shadow: 4px 6px 4px rgba(68,68,68,0.6);
+  box-shadow:         4px 6px 4px rgba(68,68,68,0.6);*/
+  
+  z-index: 1;
+}
+#pizza-left { left: 0; top: 0; border-radius: 180px 0 0 180px; background-position: left center;}
+#pizza-right { right: 0; top: 0; border-radius: 0 180px 180px 0; background-position: right center;}
+
+.ingredient-left, .ingredient-right {
+  position: absolute;
+  width: 90px;
+  height: 180px;
+  
+  background-size: 180px 180px;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  
+  opacity: 0; 
+  display: block;
+}
+.ingredient-left { top: 0; left: 0; border-radius: 180px 0 0 180px; background-position: left center;}
+.ingredient-right { top: 0; right: 0; border-radius: 0 180px 180px 0; background-position: right center;}
+
+.ingredient-left.maybe, .ingredient-right.maybe {
+  display: block;
+  opacity: 0.5;
+}
+
+.ingredient-left.on, .ingredient-right.on {
+  display: block;
+  opacity: 1;
+}
+
+#ingredients-wrapper {
+  position: absolute;
+  bottom: 18px;
+  height: 64px;
+  width: 100%;
+  z-index: 400;
+}
+
+#ingredients {
+  text-align: center;
+  z-index: 500;
+}
+
+.ingredient {
+  width: 80px;
+  height: 60px;
+  
+  display: inline-block;
+  margin: 0 4px;
+  
+  text-align: center;
+  
+  background-position: center center;
+  background-size: 60px 60px;
+  background-repeat: no-repeat;
+  background-color: #f6f6f6;
+  
+  border-radius: 5px;
+}
+.ingredient:hover {
+  background-color: #ddd;
+}
+.ingredient .name {
+  width: auto;
+  height: 14px;
+  line-height: 14px;
+  border-radius: 0 0 5px 5px;
+  
+  margin-top: 46px;
+  font-family: arial, sans-serif;
+  font-size: 10px;
+  padding: 2px 8px;
+  text-align: center;
+  background-color: #f81;
+  color: #fff;
+}
+
+.board .wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.board .inner {
+  position: relative;
+  width: 60%;
+  height: 60%;
+  top: 20%;
+  left: 20%;
+  background: url('../images/board-inner.png') repeat #eee;
+  
+  border-radius: 20px;
+}
+
+.board .wrapper h2 {
+  color: #fff;
+  font-size: 40px;
+  font-family: 'Unkempt', cursive;
+  text-shadow: 1px 1px 2px #333;
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 14px;
+}
+
+.board .wrapper a.button {
+  display: inline-block;
+  font-size: 22px;
+  font-family: 'Unkempt', cursive;
+  text-shadow: 1px 1px 2px #333;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: url('../images/blueprint.gif') blue repeat;
+  
+  margin: 4px;
+  
+  -moz-box-shadow:    4px 6px 4px rgba(68,68,68,0.6);
+  -webkit-box-shadow: 4px 6px 4px rgba(68,68,68,0.6);
+  box-shadow:         4px 6px 4px rgba(68,68,68,0.6);
+}
+
+.board .content {
+  position: relative;
+  top: 10%;
+  left: 8%;
+  text-align: center;
+  background-color: transparent;
+}
+
+.timer-bar {
+  display: inline-block; 
+  background-color: #fff; 
+  border: 1px solid #777; 
+  width: 84px; height: 4px;
+  border-radius: 2px;
+  padding: 1px;
+  margin-top: 2px;
+}
+
+.timer-bar .bar {
+  display: inline-block;
+  background-color: #36f; 
+  width: 100%; height: 100%;
+  border-radius: 2px;
+}
+
+#loading-board {
+  z-index: 200;
+  display: block;
+  background-color: #eee;
+  font-size: 32px;
+  color: #000;
+  text-align: center;
+  font-family: 'Unkempt', cursive;
+  text-shadow: 1px 2px 2px #eee;
+}
+
+#welcome-board {
+  display: block;
+  background: url('../images/wood.jpg') repeat #eee;
+}
+
+#welcome-board .logo {
+  margin: auto 0 auto 10%;
+}
+
+#welcome-board .logo img {
+  height: 320px;
+}
+
+#welcome-board .logo-text {
+  position: absolute;
+  top: 20%;
+  right: 14%;
+  font-size: 60px;
+  color: #fff;
+  font-family: 'Cutive', serif;
+  text-shadow: 0px 4px 8px #000;
+}
+
+#welcome-board .buttons {
+  position: absolute;
+  top: 42%;
+  right: 14%;
+  text-align: center;
+}
+
+#welcome-board .buttons a {
+  display: block;
+  font-size: 32px;
+  font-family: 'Unkempt', cursive;
+  text-shadow: 1px 1px 2px #333;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 5px;
+  background: url('../images/blueprint.gif') blue repeat;
+  
+  -moz-box-shadow:    4px 6px 4px rgba(68,68,68,0.6);
+  -webkit-box-shadow: 4px 6px 4px rgba(68,68,68,0.6);
+  box-shadow:         4px 6px 4px rgba(68,68,68,0.6);
+}
+
+#debug {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#msg {
+  position: relative;
+  width: 400px;
+  height: 80px;
+  margin: 100px auto;
+  z-index: 300;
+  
+  font-family: 'Unkempt', cursive;
+  font-size: 40px;
+  color: #36f;
+  text-shadow: 1px 3px 8px #444;      
+  text-align: center;
+  opacity: 0;
+}
+
+#next-order {
+  position: absolute;
+  width: 48px;
+  height: 3px;
+  top: 88px; left: 20px;
+}
+
+#order-notes, #order-notes-show {
+  position: absolute;
+  width: 45px;
+  height: 50px;
+  background: url('../images/note.png') transparent no-repeat;
+  background-size: 50px auto;
+  top: 100px; left: 20px;
+  padding: 10px 8px;
+  font-size: 20px;
+  font-family: 'Unkempt', cursive;
+  text-shadow: 1px 1px 2px #666;
+  text-align: center;
+}
+
+#order-note {
+  position: absolute;
+  width: 135px;
+  height: 150px;
+  background: url('../images/note.png') transparent no-repeat;
+  background-size: 135px auto;
+  top: 100px; right: 10px;
+  padding: 16px 20px;
+  opacity: 0;
+  font-size: 16px;
+  font-family: 'Unkempt', cursive;
+  text-shadow: 1px 1px 2px #666;
+}
+
+#order-note .strike {
+  color: #444;
+  text-decoration: line-through;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+/* Styles */
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width : 321px) {
+/* Styles */
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width : 320px) {
+/* Styles */
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+/* Styles */
+
+  #welcome-board .logo img {
+    height: 500px;
+  }
+  
+  #pizza {
+    position: relative;
+    margin: 0 auto;
+    width: 240px;
+    height: 240px;
+    clear: both;
+  }
+
+  #pizza-left, #pizza-right {
+    position: absolute;
+    width: 120px;
+    height: 240px;
+
+    background-image: url('../images/base.png');
+    background-size: 240px 240px;
+    background-repeat: no-repeat;
+    background-color: #f4f4f4;
+
+    /*-moz-box-shadow:    4px 6px 4px rgba(68,68,68,0.6);
+    -webkit-box-shadow: 4px 6px 4px rgba(68,68,68,0.6);
+    box-shadow:         4px 6px 4px rgba(68,68,68,0.6);*/
+
+    z-index: 1;
+  }
+  #pizza-left { left: 0; top: 0; border-radius: 240px 0 0 240px; background-position: left center;}
+  #pizza-right { right: 0; top: 0; border-radius: 0 240px 240px 0; background-position: right center;}
+
+  .ingredient-left, .ingredient-right {
+    position: absolute;
+    width: 120px;
+    height: 240px;
+
+    background-size: 240px 240px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+
+    opacity: 0; 
+    display: block;
+  }
+  .ingredient-left { top: 0; left: 0; border-radius: 240px 0 0 240px; background-position: left center;}
+  .ingredient-right { top: 0; right: 0; border-radius: 0 240px 240px 0; background-position: right center;}
+}
+
+/* iPads (landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
+/* Styles */
+}
+
+/* iPads (portrait) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+/* Styles */
+
+  
+}
+
+/* iPhone 4 ----------- */
+@media only screen and (-webkit-min-device-pixel-ratio : 1.5), only screen and (min-device-pixel-ratio : 1.5) {
+/* Styles */
+}
+
+/* Desktops and laptops ----------- */
+@media only screen  and (min-width : 1200px) {
+/* Styles */
+  #viewarea {
+    width: 720px;
+    height: 480px;
+    margin: 20px auto;
+  }
+  
+  .ingredient {
+    width: 70px;
+  }
+}
+
+/* Large screens ----------- */
+@media only screen  and (min-width : 1824px) {
+/* Styles */
+}
