@@ -110,6 +110,7 @@ function startLevel(level, run) {
   
   $('#level').html(X.level_id + 1);
   $('#score').html(X.score);
+  $('#order-notes').html('');
   $('#time-left .bar').width('100%');
 }
 
@@ -119,18 +120,21 @@ function endLevel() {
   if(X.orders_queue.length || X.orders_level) {
     failGame();
   } else {
-    clearInterval(X.interval);
+    pauseGame();
+    
+    // animate - load score board
+    $('#score-board #scores').html('');
+    $('#score-board #nextlevel-text').html(X.level_id+2);
+    $('#score-board').fadeIn('fast');
     
     // add up scores
-    addScore('level_up');
-    addScore('time_left');
-    addScore('superb');
-    if(!X.errors) addScore('perfect');
+    $('#score-board #scores').append('Level up bonus: '+ addScore('level_up'));
+    $('#score-board #scores').append('<br />Extra time bonus: '+ addScore('time_left'));
+    $('#score-board #scores').append('<br />Superb bonus: '+ addScore('superb'));
+    if(!X.errors) $('#score-board #scores').append('<br />Perfect bonus: '+ addScore('perfect'));
 
-    // animate - load score board
-
-    alert('Level '+ X.level_id+2);
-    startLevel(X.level_id+1, true);
+    //alert('Level '+ X.level_id+2);
+    //startLevel(X.level_id+1, true);
   }
   
   console.log('endLevel');
@@ -157,14 +161,23 @@ function runTimer() {
 
 function addScore(what) {
   var _extra = CONFIG.scoring[what];
-  if(what == 'time_left') _extra = X.time_left * CONFIG.scoring[what];  
-  if(what == 'superb_3' && X.superb >= 3) _extra = CONFIG.scoring[what];
+  
+  if(what == 'time_left') {
+    _extra = X.time_left * CONFIG.scoring[what];
+  }
+  
+  if(what == 'superb_3' && X.superb >= 3) {
+    showMessage(MSG['_superb']);
+    _extra = CONFIG.scoring[what];
+  }
   
   X.score += _extra;
   
   console.log('addScore: '+ _extra +' for: '+ what);
   console.log(X.score);
+  
   $('#score').html(X.score);
+  return _extra;
 }
 
 function addOrder() {
@@ -324,6 +337,6 @@ function showMessage(msg) {
   $('#msg').text(msg);
   
   $('#msg').transition({y: 0, opacity: 1, easing: 'snap'}, function() {
-    $(this).transition({y: 200, opacity: 0, delay: 200, easing: 'in'});
+    $(this).transition({y: 200, opacity: 0, delay: 140, easing: 'in'});
   })
 }

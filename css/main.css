@@ -7,6 +7,7 @@ body {
   background-color: #ddd;
   margin: 0;
   padding: 0;
+  font-size: 12px;
 }
 
 #viewarea {
@@ -16,7 +17,7 @@ body {
   margin: 0;
   background-color: #f8f8f8;
   border: 1px solid #000;
-  overflow: none;
+  overflow: hidden;
 }
 
 .board {
@@ -42,13 +43,15 @@ body {
   background-color: #eee;
   background: url('../images/blueprint.gif') #fff repeat-x;
   font-family: 'Cutive', serif;
-  font-size: 20px;
+  font-size: 140%;
   box-shadow: 0 5px 5px #888;
 }
+
 #game-bar .container {
   padding: 10px 20px;
   text-shadow: 1px 2px 2px #fff;
 }
+
 #game-bar .container a {
   display: inline-block;
   padding: 4px;
@@ -57,6 +60,7 @@ body {
   color: #36f;
   text-decoration: none;
 }
+
 #game-area {
   height: auto;
 }
@@ -64,7 +68,7 @@ body {
 #pizza-wrapper {
   position: absolute;
   width: 100%;
-  bottom: 26%;
+  top: 28%;
 }
 #pizza {
   position: relative;
@@ -120,7 +124,7 @@ body {
 
 #ingredients-wrapper {
   position: absolute;
-  bottom: 18px;
+  top: 80%;
   height: 64px;
   width: 100%;
   z-index: 400;
@@ -132,7 +136,7 @@ body {
 }
 
 .ingredient {
-  width: 80px;
+  width: 74px;
   height: 60px;
   
   display: inline-block;
@@ -146,6 +150,8 @@ body {
   background-color: #f6f6f6;
   
   border-radius: 5px;
+  
+  cursor: hand;
 }
 .ingredient:hover {
   background-color: #ddd;
@@ -158,7 +164,7 @@ body {
   
   margin-top: 46px;
   font-family: arial, sans-serif;
-  font-size: 10px;
+  font-size: 92%;
   padding: 2px 8px;
   text-align: center;
   background-color: #f81;
@@ -183,41 +189,66 @@ body {
   border-radius: 20px;
 }
 
-.board .wrapper h2 {
+.board .inner > .close-btn {
   color: #fff;
-  font-size: 40px;
+  font-size: 180%;
+  position: absolute;
   font-family: 'Unkempt', cursive;
   text-shadow: 1px 1px 2px #333;
-  text-align: center;
-  margin: 0 auto;
-  padding-top: 14px;
+
+  right: 3%;
+  top: 3%;
 }
 
-.board .wrapper a.button {
-  display: inline-block;
-  font-size: 22px;
+.board h2 {
+  color: #fff;
+  font-size: 230%;
   font-family: 'Unkempt', cursive;
+  text-shadow: 1px 1px 2px #000;
+  text-align: center;
+  padding-top: 5%;
+}
+
+.board .content {
+  padding: 2% 8%;
+  min-height: 20%;
+  
+  color: #fff;
   text-shadow: 1px 1px 2px #333;
+  font-size: 190%;
+  font-family: 'Unkempt', cursive;
+  
+  text-align: left;
+  background-color: transparent;
+  margin: 2% 0;
+}
+
+.board .button {
+  cursor: hand;
+}
+
+.board .buttons {
+  background-color: transparent;
+  text-align: center;
+}
+
+.board .buttons a.button {
+  display: inline-block;
+  font-size: 190%;
+  font-family: 'Unkempt', cursive;
+  text-shadow: 1px 1px 3px #000;
   text-align: center;
   text-decoration: none;
   color: #fff;
-  padding: 4px 8px;
+  padding: 6px 12px;
   border-radius: 5px;
-  background: url('../images/blueprint.gif') blue repeat;
+  background: url('../images/blueprint.gif') #0F8CF2 repeat;
   
   margin: 4px;
   
   -moz-box-shadow:    4px 6px 4px rgba(68,68,68,0.6);
   -webkit-box-shadow: 4px 6px 4px rgba(68,68,68,0.6);
   box-shadow:         4px 6px 4px rgba(68,68,68,0.6);
-}
-
-.board .content {
-  position: relative;
-  top: 10%;
-  left: 8%;
-  text-align: center;
-  background-color: transparent;
 }
 
 .timer-bar {
@@ -241,7 +272,7 @@ body {
   z-index: 200;
   display: block;
   background-color: #eee;
-  font-size: 32px;
+  font-size: 240%;
   color: #000;
   text-align: center;
   font-family: 'Unkempt', cursive;
@@ -254,7 +285,7 @@ body {
 }
 
 #welcome-board .logo {
-  margin: auto 0 auto 10%;
+  margin: auto 0 auto 8%;
 }
 
 #welcome-board .logo img {
@@ -264,8 +295,8 @@ body {
 #welcome-board .logo-text {
   position: absolute;
   top: 20%;
-  right: 14%;
-  font-size: 60px;
+  right: 12%;
+  font-size: 400%;
   color: #fff;
   font-family: 'Cutive', serif;
   text-shadow: 0px 4px 8px #000;
@@ -274,21 +305,21 @@ body {
 #welcome-board .buttons {
   position: absolute;
   top: 42%;
-  right: 14%;
+  right: 12%;
   text-align: center;
 }
 
 #welcome-board .buttons a {
   display: block;
-  font-size: 32px;
+  font-size: 240%;
   font-family: 'Unkempt', cursive;
-  text-shadow: 1px 1px 2px #333;
+  text-shadow: 1px 1px 3px #000;
   text-align: center;
   text-decoration: none;
   color: #fff;
   padding: 8px 20px;
   border-radius: 5px;
-  background: url('../images/blueprint.gif') blue repeat;
+  background: url('../images/blueprint.gif') #0F8CF2 repeat;
   
   -moz-box-shadow:    4px 6px 4px rgba(68,68,68,0.6);
   -webkit-box-shadow: 4px 6px 4px rgba(68,68,68,0.6);
@@ -310,14 +341,14 @@ body {
   z-index: 300;
   
   font-family: 'Unkempt', cursive;
-  font-size: 40px;
+  font-size: 320%;
   color: #36f;
-  text-shadow: 1px 3px 8px #444;      
+  text-shadow: 1px 3px 20px #444;      
   text-align: center;
   opacity: 0;
 }
 
-#next-order {
+#next-order.timer-bar {
   position: absolute;
   width: 48px;
   height: 3px;
@@ -332,10 +363,14 @@ body {
   background-size: 50px auto;
   top: 100px; left: 20px;
   padding: 10px 8px;
-  font-size: 20px;
+  font-size: 190%;
   font-family: 'Unkempt', cursive;
   text-shadow: 1px 1px 2px #666;
   text-align: center;
+}
+
+#order-notes-show {
+  padding-left: 2px;
 }
 
 #order-note {
@@ -347,7 +382,7 @@ body {
   top: 100px; right: 10px;
   padding: 16px 20px;
   opacity: 0;
-  font-size: 16px;
+  font-size: 170%;
   font-family: 'Unkempt', cursive;
   text-shadow: 1px 1px 2px #666;
 }
@@ -360,6 +395,154 @@ body {
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
 /* Styles */
+  body {
+    font-size: 10px;
+  }
+  
+  #viewarea {
+    min-height: 280px;
+    margin: 0;
+  }
+  
+  #welcome-board .logo img {
+    height: 200px;
+  }
+  
+  #welcome-board .logo-text {
+    top: 20%;
+  }
+
+  #welcome-board .buttons {
+    top: 44%;
+  }
+  
+  #game-bar, #welcome-bar {
+    height: 46px;
+    width: 100%;
+  }
+
+  #pizza-wrapper {
+    width: 100%;
+    top: 26%;
+  }
+  
+  #pizza {
+    margin: 0 auto;
+    width: 120px;
+    height: 120px;
+  }
+
+  #pizza-left, #pizza-right {
+    position: absolute;
+    width: 60px;
+    height: 120px;
+
+    background-size: 120px 120px;
+  }
+  #pizza-left { left: 0; top: 0; border-radius: 120px 0 0 120px; background-position: left center;}
+  #pizza-right { right: 0; top: 0; border-radius: 0 120px 120px 0; background-position: right center;}
+
+  .ingredient-left, .ingredient-right {
+    position: absolute;
+    width: 60px;
+    height: 120px;
+
+    background-size: 120px 120px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+
+    opacity: 0; 
+    display: block;
+  }
+  .ingredient-left { top: 0; left: 0; border-radius: 120px 0 0 120px; background-position: left center;}
+  .ingredient-right { top: 0; right: 0; border-radius: 0 120px 120px 0; background-position: right center;}
+  
+  #ingredients-wrapper {
+    top: 76%;
+    bottom: auto;
+    height: 44px;
+  }
+  
+  .ingredient {
+    width: 44px;
+    height: 40px;
+
+    margin: 0 3px;
+    background-size: 32px 32px;
+    border-radius: 3px;
+  }
+  .ingredient .name {
+    height: 12px;
+    line-height: 12px;
+    border-radius: 0 0 3px 3px;
+
+    margin-top: 28px;
+    font-size: 90%;
+    padding: 2px 2px;
+  }
+  
+  .timer-bar {
+    width: 38px; height: 2px;
+    border-radius: 1px;
+    padding: 1px;
+    margin-top: 2px;
+  }
+
+  .timer-bar .bar {
+    border-radius: 1px;
+  }
+  
+  #next-order.timer-bar {
+    width: 28px;
+    height: 2px;
+    top: 56px; left: 12px;
+  }
+  
+  #order-notes, #order-notes-show {
+    position: absolute;
+    width: 34px;
+    height: 40px;
+    background-size: 34px auto;
+    top: 70px; left: 10px;
+    padding: 4px 1px;
+    font-size: 190%;
+  }
+
+  #order-notes-show {
+    padding-left: 2px;
+  }
+
+  #order-note {
+    width: 88px;
+    height: 120px;
+    background-size: 88px auto;
+    top: 70px; right: 0px;
+    padding: 10px 14px;
+    font-size: 130%;
+  }
+    
+  .board .inner {
+    width: 74%;
+    height: 74%;
+    top: 13%;
+    left: 13%;
+
+    border-radius: 14px;
+    background-size: 60px 60px;
+  }
+  
+  .board .content {
+    font-size: 170%;
+  }
+  
+  #msg {
+    width: 220px;
+    height: 60px;
+    margin: 30px auto;
+
+    font-size: 290%;
+  }
+  
 }
 
 /* Smartphones (landscape) ----------- */
@@ -375,52 +558,115 @@ body {
 /* iPads (portrait and landscape) ----------- */
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
 /* Styles */
-
+  body {
+    font-size: 14px;
+  }
   #welcome-board .logo img {
-    height: 500px;
+    height: 460px;
+  }
+
+  #welcome-board .logo-text {
+    top: 20%;
+  }
+
+  #welcome-board .buttons {
+    top: 44%;
   }
   
   #pizza {
-    position: relative;
-    margin: 0 auto;
-    width: 240px;
-    height: 240px;
-    clear: both;
+    width: 280px;
+    height: 280px;
   }
 
   #pizza-left, #pizza-right {
-    position: absolute;
-    width: 120px;
-    height: 240px;
+    width: 140px;
+    height: 280px;
 
-    background-image: url('../images/base.png');
-    background-size: 240px 240px;
-    background-repeat: no-repeat;
-    background-color: #f4f4f4;
-
-    /*-moz-box-shadow:    4px 6px 4px rgba(68,68,68,0.6);
-    -webkit-box-shadow: 4px 6px 4px rgba(68,68,68,0.6);
-    box-shadow:         4px 6px 4px rgba(68,68,68,0.6);*/
-
-    z-index: 1;
+    background-size: 280px 280px;
   }
-  #pizza-left { left: 0; top: 0; border-radius: 240px 0 0 240px; background-position: left center;}
-  #pizza-right { right: 0; top: 0; border-radius: 0 240px 240px 0; background-position: right center;}
+  #pizza-left { left: 0; top: 0; border-radius: 280px 0 0 280px; background-position: left center;}
+  #pizza-right { right: 0; top: 0; border-radius: 0 280px 280px 0; background-position: right center;}
 
   .ingredient-left, .ingredient-right {
     position: absolute;
-    width: 120px;
-    height: 240px;
+    width: 140px;
+    height: 280px;
 
-    background-size: 240px 240px;
+    background-size: 280px 280px;
     background-repeat: no-repeat;
     background-color: transparent;
 
     opacity: 0; 
     display: block;
   }
-  .ingredient-left { top: 0; left: 0; border-radius: 240px 0 0 240px; background-position: left center;}
-  .ingredient-right { top: 0; right: 0; border-radius: 0 240px 240px 0; background-position: right center;}
+  .ingredient-left { top: 0; left: 0; border-radius: 280px 0 0 280px; background-position: left center;}
+  .ingredient-right { top: 0; right: 0; border-radius: 0 280px 280px 0; background-position: right center;}
+  
+  
+  #ingredients-wrapper {
+    top: 76%;
+    bottom: auto;
+    height: 74px;
+  }
+  
+  .ingredient {
+    width: 80px;
+    height: 70px;
+
+    margin: 0 3px;
+    background-size: 64px 64px;
+    border-radius: 3px;
+  }
+  .ingredient .name {
+    height: 16px;
+    line-height: 16px;
+    border-radius: 0 0 3px 3px;
+
+    margin-top: 54px;
+    font-size: 90%;
+    padding: 2px 2px;
+  }
+  
+  .timer-bar {
+    width: 78px; height: 3px;
+    border-radius: 1px;
+    padding: 1px;
+    margin-top: 2px;
+  }
+
+  .timer-bar .bar {
+    border-radius: 1px;
+  }
+  
+  #next-order.timer-bar {
+    width: 56px;
+    height: 3px;
+    top: 84px; left: 20px;
+  }
+  
+  #order-notes, #order-notes-show {
+    position: absolute;
+    width: 60px;
+    height: 70px;
+    background-size: 60px auto;
+    top: 100px; left: 20px;
+    padding: 4px 1px;
+    font-size: 190%;
+  }
+
+  #order-notes-show {
+    padding-left: 2px;
+  }
+
+  #order-note {
+    width: 160px;
+    height: 180px;
+    background-size: 160px auto;
+    top: 100px; right: 0px;
+    padding: 14px 18px;
+    font-size: 130%;
+  }
+  
 }
 
 /* iPads (landscape) ----------- */
@@ -431,7 +677,14 @@ body {
 /* iPads (portrait) ----------- */
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
 /* Styles */
+  .ingredient {
+    width: 68px;
+    height: 70px;
 
+    margin: 0 3px;
+    background-size: 64px 64px;
+    border-radius: 3px;
+  }
   
 }
 
@@ -441,16 +694,16 @@ body {
 }
 
 /* Desktops and laptops ----------- */
-@media only screen  and (min-width : 1200px) {
+@media only screen  and (min-width : 1124px) {
 /* Styles */
   #viewarea {
-    width: 720px;
-    height: 480px;
+    width: 700px;
+    height: 420px;
     margin: 20px auto;
   }
   
   .ingredient {
-    width: 70px;
+    width: 64px;
   }
 }
 

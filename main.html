@@ -1,9 +1,11 @@
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1" >
+  <meta name="apple-mobile-web-app-capable" content="yes" >
   
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <script type="text/javascript" src="js/jquery.transit.min.js"></script>
+  <script type="text/javascript" src="js/asset.js"></script>
   <script type="text/javascript" src="js/main.js"></script> 
   
   <link href='css/main.css' rel='stylesheet' type='text/css'>
@@ -11,8 +13,69 @@
   <link href='http://fonts.googleapis.com/css?family=Cutive' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Unkempt' rel='stylesheet' type='text/css'>
   
-  <script type="text/javascript">
+  <script type="text/javascript">  
+    window.addEventListener('orientationchange', function (e) {
+      updateOrientation();
+      alert($(body).css('scale'));
+      window.scrollTo(0, 1);
+      switch(window.orientation) {
+          case 0: // portrait
+          case 180: // portrait
+          case 90: // landscape
+          case -90: // landscape
+      }
+    }, false);
+
+    /*$(document).ready(function () {
+         $(window)    
+              .bind('orientationchange', function(){
+                   if (window.orientation % 180 == 0){
+                       $(document.body).css("-webkit-transform-origin", "")
+                           .css("-webkit-transform", "");               
+                   } 
+                   else {                   
+                       if ( window.orientation > 0) { //clockwise
+                         $(document.body).css("-webkit-transform-origin", "200px 190px")
+                           .css("-webkit-transform",  "rotate(-90deg)");  
+                       }
+                       else {
+                         $(document.body).css("-webkit-transform-origin", "280px 190px")
+                           .css("-webkit-transform",  "rotate(90deg)"); 
+                       }
+                   }
+               })
+              .trigger('orientationchange'); 
+    });*/
+    
     $(document).ready(function(){
+      window.scrollTo(0, 1);
+      
+      var assets = new AssetManager();
+
+      assets.queueDownload('images/base.png');
+      assets.queueDownload('images/blueprint.gif');
+      assets.queueDownload('images/board-inner.png');
+      assets.queueDownload('images/logo.png');
+      assets.queueDownload('images/wood.jpg');
+
+      assets.queueDownload('images/note.png');
+
+      assets.queueDownload('images/ingredients/cheese.png');
+      assets.queueDownload('images/ingredients/chilli.png');
+      assets.queueDownload('images/ingredients/mushroom.png');
+      assets.queueDownload('images/ingredients/olive.png');
+      assets.queueDownload('images/ingredients/onion.png');
+      assets.queueDownload('images/ingredients/pepper.png');
+      assets.queueDownload('images/ingredients/salami.png');
+      assets.queueDownload('images/ingredients/sauce.png');
+      assets.queueDownload('images/ingredients/tomato.png');
+
+      // hide loading-board after assets download
+      assets.downloadAll(function() {
+        //$('#loading-board').fadeOut('fast');
+        document.getElementById('loading-board').style.visibility = 'hidden';
+      });
+      
       for(i in CONFIG.ingredients) {
         $('<div class="ingredient" name="'+ CONFIG.ingredients[i] +'" ><div class="name">'+ CONFIG.ingredients[i] +'</div></div>')
           .css('background-image', 'url("images/ingredients/'+ CONFIG.ingredients[i] +'.png")')
@@ -29,12 +92,10 @@
           .appendTo('#pizza-right');
       }
       
-      $('#loading-board').fadeOut('fast'); // hide loading-board
-      
-      $('#welcome-board').on('click', function(e) {
+      /*$('#welcome-board').on('click', function(e) {
         $(this).fadeOut('fast');
         //startGame(true);
-      });
+      });*/
       
       /*$('.wrapper').on('click', function(e) {
         $(this).parent('.board').hide();
@@ -47,12 +108,7 @@
         e.preventDefault();
       });
       
-      $('.play-btn').on('click', function(e) {
-        resumeGame();
-        $('#pause-board').fadeOut('fast');
-        e.preventDefault();
-      });
-      
+      /* SHOW BOARDS */
       $('.how-btn').on('click', function(e) {
         pauseGame();
         $('#how-board').fadeIn('fast');
@@ -65,14 +121,28 @@
         e.preventDefault();
       });
       
-      $('.playagain-btn').on('click', function(e) {
-        $('#gameover-board').fadeOut('fast');
+      /* HIDE BOARDS */
+      $('.play-btn').on('click', function(e) {
+        $(this).parents('.board').fadeOut('fast');
         startGame(true);
         e.preventDefault();
       });
       
-      $('.off-btn').on('click', function(e) {
-        $('#how-board').fadeOut('fast');
+      $('.playagain-btn').on('click', function(e) {
+        $(this).parents('.board').fadeOut('fast');
+        startGame(true);
+        e.preventDefault();
+      });
+      
+      $('.close-btn').on('click', function(e) {
+        $(this).parents('.board').fadeOut('fast');
+        resumeGame();
+        e.preventDefault();
+      });
+      
+      $('.nextlevel-btn').on('click', function(e) {
+        $(this).parents('.board').fadeOut('fast');
+        startLevel(X.level_id+1, true);
         resumeGame();
         e.preventDefault();
       });
@@ -98,15 +168,20 @@
     <div class="logo"><img src="images/logo.png" /></div>
     <div class="logo-text">PizzaVille</div>
     <div class="buttons">
-      <a href="#" id="play-btn" >Play Now</a>
+      <a href="#" class="play-btn" >Play Now</a>
     </div>
   </div>
   
   <div id="score-board" class="board">
     <div class="wrapper">
       <div class="inner">
+        <!--<div class="close-btn button">x</div>-->
+        <h2>Level bonus</h2>
         <div class="content">
-          Score
+          <p id="scores"></p>
+        </div>
+        <div class="buttons">
+          <a class="nextlevel-btn button">Go to level <span id="nextlevel-text"></span></a>
         </div>
       </div>
     </div>
@@ -114,8 +189,13 @@
   <div id="pause-board" class="board">
     <div class="wrapper">
       <div class="inner">
+        <div class="close-btn button">x</div>
+        <h2>Game paused...</h2>
         <div class="content">
-          Pause...
+          <p>Taking a break... work life balance ;)</p>
+        </div>
+        <div class="buttons">
+          <a class="close-btn button">Back</a>
         </div>
       </div>
     </div>
@@ -123,11 +203,14 @@
   <div id="how-board" class="board">
     <div class="wrapper">
       <div class="inner">
+        <div class="close-btn button">x</div>
         <h2>How to play...</h2>
         <div class="content">
-          <p>Tap 1 time on the right ingredient to fill half of the pizza</p>
-          <p>Tap 2 times on the right ingredient to fill whole of the pizza</p>
-          <a class="off-btn button">Back</a>
+          <p style="margin-bottom: 4%">Tap 1 time to fill half of the pizza</p>
+          <p>Tap 2 times to fill whole of the pizza</p>
+        </div>
+        <div class="buttons">
+          <a class="close-btn button">Ok</a>
         </div>
       </div>
     </div>
@@ -135,10 +218,13 @@
   <div id="gameover-board" class="board">
     <div class="wrapper">
       <div class="inner">
+        <div class="close-btn button">x</div>
         <h2>Game Over!</h2>
         <div class="content">
+          You are fired! But practice makes perfect! Keep trying...
+        </div>
+        <div class="buttons">
           <a class="playagain-btn button">Play again</a>
-          <!--<a class="home-btn button">Home</a>-->
         </div>
       </div>
     </div>
@@ -186,19 +272,13 @@
 </div> <!-- viewarea -->
 <!-- debug -->
 <div id="debug">
-  <a href="#" id="play-btn">Play</a>&nbsp;|&nbsp;<a href="#" id="pause-btn">Pause</a>&nbsp;|&nbsp;<a href="#" id="how-btn">How</a>
+  <a href="#" class="play-btn">Play</a>&nbsp;|&nbsp;<a href="#" id="pause-btn">Pause</a>&nbsp;|&nbsp;<a href="#" id="how-btn">How</a>
   
   <br />
   Errors: <span id="errors">0</span>,&nbsp;
   <br />
   Orders queue: <span id="orders"></span>,&nbsp;
   Orders left: <span id="o"></span> &nbsp;
-  
-  <img src="images/logo.png" height="0" />
-  <img src="images/blueprint.gif" height="0" />
-  <img src="images/wood.jpg" height="0" />
-  <img src="images/base.png" height="0" />
-  <img src="images/board-inner.png" height="0" />
 </div><!-- debug -->
 
 </body>
